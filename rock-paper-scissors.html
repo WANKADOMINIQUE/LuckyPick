@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>Rock paper scissors</title>
+  <style>
+
+body {
+  background-color: rgb(25, 25, 25); 
+  color: white;
+  font-family: Arial;
+  margin: auto 10px;
+}
+.title{
+  font-size: 25px;
+  font-weight: bold;
+}
+.move-icon{
+  height: 50px;
+}
+.move-button{
+  background-color: transparent;
+  border: 3px solid white;
+  cursor: pointer;
+  height: 120px;
+  width: 120px;
+  border-radius: 60px;
+  margin: 10px;
+}
+.reset-button{
+
+  background-color:white;
+  color: black;
+  height: 40px;
+  width: 100px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+    p
+  </iframe>
+  <h4 class="title">Rock paper scissors</h4>
+
+  <button 
+  onclick="
+  playgame('rock');" class="move-button"><img src="./images/rock-emoji.png" class="move-icon"></button>
+
+  <button
+  onclick="
+  playgame('paper');
+  "
+  class="move-button"
+  ><img src="./images/paper-emoji.png" class="move-icon">
+  </button>
+
+  <button
+  onclick="
+  playgame('scissors');
+
+ "
+ class="move-button"
+ ><img src="./images/scissors-emoji.png" class="move-icon"></button>
+
+
+<p class="js-result"></p>
+<p class="js-moves"></p>
+ <p class="js-score"></p>
+  <p> <a href="###">Click Here</a> to see the final version of the project</p>
+
+  <button onclick=" resetScore() " class="reset-button">Reset Score</button>
+
+
+
+  <script>
+
+  let finalScore = {
+    win: 0,
+    losses: 0,
+    ties: 0
+  }
+
+ updateScore()
+ myresult();
+
+
+  //console.log(localStorage.getItem('finalScore'));
+  finalScore = JSON.parse(localStorage.getItem('finalScore'));
+
+    function playgame(playMove){
+    const computerMove = pickComputerMove();
+
+  let result = '';
+ if(playMove === 'scissors'){
+
+   if(computerMove === 'rock'){
+    result = 'you lose';
+ 
+  } else if (computerMove === 'paper'){
+    result = 'You win';
+
+  } else {
+    result = 'tie (draw)';
+  
+  }
+    //alert(`You played Scissors and the computer Played ${computerMove}. \n Result: ${result}`); 
+    }else if (playMove === 'rock'){
+      
+      if(computerMove === 'paper'){
+        result = 'You win';
+      } else if (computerMove === 'rock'){
+        result = 'tie (draw)';
+      } else {
+        result = 'You lose';
+      }
+      console.log(`:: ${result} !`);
+      //alert(`You played rock and the computer Played ${computerMove}. \n Result: ${result}`); 
+    
+    } else if (playMove === 'paper'){
+      if(computerMove === 'rock'){
+        result = 'you lose';
+      } else if (computerMove === 'paper'){
+        result = 'tie (draw)';
+      } else {
+        result = 'You win';
+      }
+      
+     // alert(`You played paper and the computer Played ${computerMove}. \n Result: ${result}`);
+    }
+      if(result === 'You win'){
+      finalScore.win +=1;
+      console.log(`Final Score: ${JSON.stringify(finalScore)}`);
+     }
+      if(result === 'you lose'){
+        finalScore.losses +=1;
+        console.log(`Final Score: ${JSON.stringify(finalScore)}`);
+      }
+      if(result === 'tie (draw)'){
+        finalScore.ties +=1;
+        console.log(`Final Score: ${JSON.stringify(finalScore)}`);
+      }
+      localStorage.setItem('finalScore', JSON.stringify(finalScore)); 
+
+      updateScore();
+      document.querySelector('.js-result').innerHTML = result; 
+      document.querySelector('.js-moves').innerHTML = `You played <img src = "images/${playMove}-emoji.png" class="move-icon"> and the computer Played <img src = "images/${computerMove}-emoji.png" class="move-icon">`;
+
+
+       console.log(`:: ${result} !`);
+     // alert(`You played ${playMove} and the computer Played ${computerMove}. \n Result: ${result} \n Final Score: Wins : ${finalScore.win}, Losses : ${finalScore.losses}, Ties : ${finalScore.ties}`); 
+      console.log(`You played ${playMove} and the computer Played ${computerMove}. \n Result: ${result} `);
+  }
+
+  function updateScore(){
+    document.querySelector('.js-score').innerHTML = `Final Score: Wins : ${finalScore.win}, 
+      Losses : ${finalScore.losses}, Ties : ${finalScore.ties}`;
+
+  }
+
+ 
+
+
+    function pickComputerMove(){
+      const randomNmber = Math.random();
+      let computerMove = '';
+      if(randomNmber > 0 && randomNmber < 1/3){
+        computerMove ='rock';
+      } else if (randomNmber >= 1/3 && randomNmber < 2/3){
+          computerMove ='paper';
+      } else {
+          computerMove ='scissors';
+      }
+      console.log(`Computer played: ${computerMove}`);
+      return computerMove;
+
+    }
+
+    function resetScore(){
+      finalScore.win = 0;
+      finalScore.losses = 0;
+      finalScore.ties = 0;
+
+
+      console.log('Score has been reset' + JSON.stringify(finalScore));
+
+      updateScore();
+    }
+  </script>
+</body>
+</html>
